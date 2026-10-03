@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="JARVO - Smart Restaurant Management. Waste Management, Inventory, Stock, Invoice Generation, POS and Central Kitchen Orders.">
+<title>JARVO — Smart Restaurant Management</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ═══════════════════ UNIFIED MEADOW & MISTY CLOUD BACKGROUND (EVERY PAGE) ═══════════════════ -->
+<div id="meadow-fixed-bg" aria-hidden="true">
+  <div class="meadow-bg-img"></div>
+  <div class="meadow-mist-overlay"></div>
+  <div class="meadow-cloud-layer meadow-cloud-top"></div>
+  <div class="meadow-cloud-layer meadow-cloud-mid"></div>
+  <div class="meadow-cloud-layer meadow-cloud-bottom"></div>
+  <div class="meadow-sunbeams"></div>
+  <div class="meadow-ambient-spores"></div>
+</div>
+
+<!-- ═══════════════════ ULTRA-CINEMATIC 16:9 LANDING VIDEO INTRO ═══════════════════ -->
+<div id="gif-intro" class="video-intro-overlay">
+  <!-- 16:9 Landing Video Container covering the entire page -->
+  <div class="cinematic-video-frame">
+    <video id="intro-video" class="cinematic-video" autoplay muted playsinline preload="auto">
+      <source src="Robot_finding_shop_in_meadow_20261003233809.mp4" type="video/mp4">
+      Your browser does not support HTML5 video.
+    </video>
+    <!-- Cinematic Vignette & Ambient Light Sweep -->
+    <div class="cinematic-vignette"></div>
+    <div class="cinematic-light-sweep"></div>
+  </div>
+
+  <!-- Ambient Backdrop Glow -->
+  <div class="cinematic-backdrop-glow"></div>
+
+  <!-- Top Cinematic HUD Overlay -->
+  <div class="cinematic-top-hud">
+    <div class="hud-tag">
+      <span class="hud-rec-dot"></span>
+      <span class="hud-brand">JARVO AI</span>
+      <span class="hud-divider">•</span>
+      <span class="hud-scene">THE STOREFRONT EXPEDITION</span>
+    </div>
+    <div class="hud-right-actions">
+      <button id="btn-sound-toggle" class="hud-sound-btn" onclick="toggleIntroSound()" title="Toggle Sound">
+        <span id="sound-icon">🔇</span>
+      </button>
+      <div class="hud-soundwaves">
+        <span></span><span></span><span></span><span></span><span></span><span></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Live Cinematic Timeline Progress Bar -->
+  <div class="cinematic-timeline-bar">
+    <div class="timeline-fill" id="timeline-fill"></div>
+  </div>
+
+  <!-- Bottom-Right Skip Intro Corner -->
+  <div class="intro-skip-corner">
+    <button id="btn-replay-intro" class="btn-replay-glass" onclick="replayIntro()" title="Replay Animation">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L2 9"/><path d="M2 3v6h6"/></svg>
+      <span>Replay</span>
+    </button>
+    <button id="btn-skip-intro" class="btn-skip-corner" onclick="dismissIntro()" title="Skip Intro (Press Esc or Space)">
+      <span class="skip-text">Skip Intro</span>
+      <span class="skip-arrow">➔</span>
+    </button>
+  </div>
+</div>
+
+<!-- ═══════════════════ CORNER ROBOT BUDDY ═══════════════════ -->
+<div id="robot-buddy" class="robot-hidden" title="Hi! I'm Jarvo. Click me!" onclick="robotNod()">
+  <div class="robot-speech-bubble" id="robot-speech">Hello Chef! 👋</div>
+  <svg viewBox="0 0 120 160" class="robot-svg">
+    <!-- Antenna -->
+    <line x1="60" y1="18" x2="60" y2="6" stroke="#4FC3F7" stroke-width="2.5"/>
+    <circle cx="60" cy="5" r="4.5" fill="#4FC3F7" class="antenna-glow"/>
+    <!-- Head with gentle nod -->
+    <g class="robot-head-group">
+      <rect x="30" y="18" width="60" height="44" rx="18" fill="#f0f4f8" stroke="#90caf9" stroke-width="1.8"/>
+      <!-- Visor screen -->
+      <rect x="36" y="24" width="48" height="32" rx="12" fill="#141a29"/>
+      <!-- Eyes -->
+      <ellipse cx="48" cy="38" rx="7" ry="8" fill="#4FC3F7" class="eye-glow left-eye"/>
+      <ellipse cx="72" cy="38" rx="7" ry="8" fill="#4FC3F7" class="eye-glow right-eye"/>
+      <circle cx="50" cy="36" r="2.5" fill="#ffffff"/>
+      <circle cx="74" cy="36" r="2.5" fill="#ffffff"/>
+      <!-- Gentle Smile -->
+      <path d="M50 47 Q60 55 70 47" stroke="#4FC3F7" stroke-width="2.2" fill="none" stroke-linecap="round" class="robot-smile-path"/>
+    </g>
+    <!-- Body -->
+    <rect x="34" y="65" width="52" height="48" rx="14" fill="#f0f4f8" stroke="#90caf9" stroke-width="1.8"/>
+    <!-- Heart Reactor -->
+    <circle cx="60" cy="85" r="7" fill="#4FC3F7" class="heart-pulse"/>
+    <circle cx="60" cy="85" r="3" fill="#ffffff"/>
+    <!-- Arms -->
+    <rect x="14" y="70" width="18" height="10" rx="5" fill="#e1e8f0" stroke="#90caf9" stroke-width="1.2"/>
+    <rect x="88" y="70" width="18" height="10" rx="5" fill="#e1e8f0" stroke="#90caf9" stroke-width="1.2" class="wave-arm"/>
+    <!-- Legs -->
+    <rect x="40" y="115" width="14" height="22" rx="6" fill="#e1e8f0" stroke="#90caf9" stroke-width="1.2"/>
+    <rect x="66" y="115" width="14" height="22" rx="6" fill="#e1e8f0" stroke="#90caf9" stroke-width="1.2"/>
+    <!-- Feet -->
+    <ellipse cx="47" cy="140" rx="11" ry="5" fill="#90caf9"/>
+    <ellipse cx="73" cy="140" rx="11" ry="5" fill="#90caf9"/>
+  </svg>
+</div>
+
+<!-- ═══════════════════ NAVIGATION BAR ═══════════════════ -->
+<nav id="main-nav" class="nav-hidden">
+  <div class="nav-inner">
+    <!-- Top Left Logo with ~10cm spaced margin -->
+    <div class="nav-brand-wrap">
+      <a href="#" class="nav-logo" onclick="showPage('home');return false;">JARVO</a>
+    </div>
+
+    <!-- Navigation links & Dropdowns -->
+    <div class="nav-links">
+      <div class="nav-dropdown" id="nav-pos">
+        <button class="nav-link dropdown-trigger" type="button">POS <span class="arrow">▾</span></button>
+        <div class="dropdown-panel">
+          <div class="dropdown-header">Point of Sale Suite</div>
+          <a href="#" onclick="return false;"><span class="dot"></span> Billing</a>
+          <a href="#" onclick="return false;"><span class="dot"></span> Inventory</a>
+          <a href="#" onclick="return false;"><span class="dot"></span> Online Order</a>
+          <a href="#" onclick="return false;"><span class="dot"></span> Report</a>
+          <a href="#" onclick="return false;"><span class="dot"></span> Menu CRM</a>
+          <a href="#" onclick="return false;"><span class="dot"></span> Purchase Manager</a>
+          <a href="#" onclick="return false;"><span class="dot"></span> Offline POS</a>
+        </div>
+      </div>
+
+      <div class="nav-dropdown" id="nav-addons">
+        <button class="nav-link dropdown-trigger" type="button">Add Ons <span class="arrow">▾</span></button>
+        <div class="dropdown-panel">
+          <div class="dropdown-header">Extensions & Connectors</div>
+          <a href="#" onclick="return false;"><span class="dot"></span> Market Place</a>
+          <a href="#" onclick="return false;"><span class="dot"></span> Integration</a>
+        </div>
+      </div>
+
+      <div class="nav-dropdown" id="nav-outlets">
+        <button class="nav-link dropdown-trigger" type="button">Outlet Types <span class="arrow">▾</span></button>
+        <div class="dropdown-panel dropdown-panel-grid">
+          <div class="dropdown-header grid-span-2">Tailored for Every Kitchen</div>
+          <a href="#" onclick="return false;"><span class="dot"></span> Fine Dine</a>
+          <a href="#" onclick="return false;"><span class="dot"></span> Ice Cream</a>
+          <a href="#" onclick="return false;"><span class="dot"></span> QSR</a>
+          <a href="#" onclick="return false;"><span class="dot"></span> Bakery</a>
+          <a href="#" onclick="return false;"><span class="dot"></span> Cafe</a>
+          <a href="#" onclick="return false;"><span class="dot"></span> Bar / Brewery</a>
+          <a href="#" onclick="return false;"><span class="dot"></span> Food Court</a>
+          <a href="#" onclick="return false;"><span class="dot"></span> Pizza</a>
+          <a href="#" onclick="return false;"><span class="dot"></span> Cloud Kitchen</a>
+          <a href="#" onclick="return false;"><span class="dot"></span> Large Chain</a>
+        </div>
+      </div>
+
+      <a href="#features" class="nav-link" onclick="scrollToSection('features');return false;">Features</a>
+      <a href="#pricing" class="nav-link" onclick="openDemoModal();return false;">Pricing</a>
+      <a href="#" class="nav-link" onclick="showPage('about');return false;">About Us</a>
+      <a href="#" class="nav-link" onclick="return false;">Careers</a>
+      <a href="#" class="nav-link" onclick="return false;">Resources</a>
+    </div>
+
+    <!-- Get Started CTA (Top Right) -->
+    <div class="nav-cta-wrap">
+      <button class="btn-get-started" id="btn-get-started" onclick="openDemoModal()">Get Started</button>
+    </div>
+  </div>
+</nav>
+
+<!-- ═══════════════════ BOOK A FREE DEMO MODAL ═══════════════════ -->
+<div id="demo-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+  <div class="modal-card">
+    <button class="modal-close" onclick="closeDemoModal()" aria-label="Close modal">&times;</button>
+    <div class="modal-header-icon">✨</div>
+    <h2 id="modal-title">Book a Free Demo</h2>
+    <p class="modal-sub">Experience how JARVO elevates your restaurant operations with AI-powered efficiency.</p>
+    
+    <form id="demo-form" onsubmit="submitDemo(event)">
+      <div class="form-grid">
+        <div class="form-group">
+          <label for="demo-name">Full Name *</label>
+          <input type="text" id="demo-name" placeholder="Gordon Ramsay" required>
+        </div>
+        <div class="form-group">
+          <label for="demo-email">Work Email *</label>
+          <input type="email" id="demo-email" placeholder="gordon@bistro.com" required>
+        </div>
+        <div class="form-group">
+          <label for="demo-phone">Phone Number *</label>
+          <input type="tel" id="demo-phone" placeholder="+1 (555) 000-1234" required>
+        </div>
+        <div class="form-group">
+          <label for="demo-city">City *</label>
+          <input type="text" id="demo-city" placeholder="New York / London" required>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="demo-business">Restaurant / Business Name *</label>
+        <input type="text" id="demo-business" placeholder="The Grand Gourmet & Cloud Kitchen" required>
+      </div>
+
+      <div class="form-group">
+        <label class="section-label">Which products are you interested in?</label>
+        <div class="checkbox-grid">
+          <label class="cb"><input type="checkbox" value="POS" checked> <span>POS</span></label>
+          <label class="cb"><input type="checkbox" value="Invoice"> <span>Invoice</span></label>
+          <label class="cb"><input type="checkbox" value="Stock"> <span>Stock</span></label>
+          <label class="cb"><input type="checkbox" value="Payroll"> <span>Payroll</span></label>
+          <label class="cb"><input type="checkbox" value="Stepwise"> <span>Stepwise</span></label>
+          <label class="cb"><input type="checkbox" value="Purchase"> <span>Purchase</span></label>
+          <label class="cb"><input type="checkbox" value="Waste Management" checked> <span>Waste Management</span></label>
+        </div>
+      </div>
+
+      <button type="submit" class="btn-submit">Submit Details for Queries →</button>
+    </form>
+
+    <div id="demo-success" class="demo-success" style="display:none;">
+      <div class="success-icon">✓</div>
+      <h3>Demo Request Confirmed!</h3>
+      <p>Thank you! Our restaurant tech specialist will reach out within 15 minutes to schedule your live walkthrough.</p>
+      <button class="btn-submit btn-modal-done" onclick="closeDemoModal()">Back to Website</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ MAIN CONTENT: HOME PAGE ═══════════════════ -->
+<main id="page-home">
+
+  <!-- 1. FULL-SCREEN HERO SECTION WITH BRUSH REVEAL -->
+  <section id="hero">
+    <!-- Bottom revealed image (robot in meadow) -->
+    <img src="robot_meadow.jpg" alt="Jarvo Robot in Meadow" class="hero-img" id="hero-img-bottom">
+    
+    <!-- Scratch reveal Canvas (Draws jarvo_storefront on top, scratched away by cursor) -->
+    <canvas id="hero-canvas"></canvas>
+
+    <!-- Floating Hero Title Overlay -->
+    <div class="hero-text-overlay">
+      <div class="hero-badge">AI-Powered Hospitality Operating System</div>
+      <h1 class="hero-title">JARVO</h1>
+      <p class="hero-tagline">Good Food. Better Business.</p>
+      <div class="scratch-instruction">
+        <span class="scratch-hand">👆</span> Move your cursor or swipe to scratch & reveal the intelligent magic inside
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. ROBOT CENTER PANEL: GENTLY SMILING ROBOT MASCOT -->
+  <section id="robot-center-section">
+    <div class="robot-stage-glow"></div>
+    <div class="robot-center-container">
+      
+      <!-- Center Robot Mascot Presentation -->
+      <div class="robot-center-figure" id="robot-mascot-card">
+        <div class="robot-halo-ring"></div>
+        <div class="robot-avatar-wrap">
+          <img src="robot_meadow.jpg" alt="Jarvo Robot Mascot" class="robot-main-portrait">
+          <!-- Gentle Smiling Robot Face Overlay Badge -->
+          <div class="robot-live-status">
+            <span class="status-pulse"></span> JARVO AI Active • Smiling & Ready
+          </div>
+        </div>
+      </div>
+
+      <!-- Center Panel Text & Innovation Highlights -->
+      <div class="robot-center-content">
+        <div class="sub-pill">MEET YOUR ROBOT SOUS-CHEF</div>
+        <h2 class="center-headline">Where Kitchen Craft Meets <span class="gold-gradient">Intelligent Automation</span></h2>
+        <p class="center-description">
+          JARVO unifies your front of house, prep line, central kitchen, and inventory vault into one seamlessly synchronized system. No more spoiled stock, no more manual invoices, and zero wasted ingredients.
+        </p>
+
+        <div class="robot-perks-row">
+          <div class="perk-box">
+            <div class="perk-icon">⚡</div>
+            <div class="perk-title">Instant Setup</div>
+            <div class="perk-desc">Syncs with all existing POS hardware & kitchen display systems.</div>
+          </div>
+          <div class="perk-box">
+            <div class="perk-icon">📉</div>
+            <div class="perk-title">30% Waste Cut</div>
+            <div class="perk-desc">Real-time tracking of food scraps, spoilage, and expiry timestamps.</div>
+          </div>
+          <div class="perk-box">
+            <div class="perk-icon">🏢</div>
+            <div class="perk-title">Central Kitchen</div>
+            <div class="perk-desc">Fulfill hundreds of outlet orders with automatic batching.</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 3. POWERFUL FEATURES WITH 3D FLIP ANIMATION (FRONT & BACK VIEWS) -->
+  <section id="features">
+    <div class="features-header">
+      <div class="sub-pill">COMPREHENSIVE KITCHEN ECOSYSTEM</div>
+      <h2 class="section-title">Powerful Features</h2>
+      <p class="section-subtitle">Hover or tap any card to view detailed specifications from both front and back</p>
+    </div>
+
+    <div class="features-grid">
+
+      <!-- 1. Waste Management -->
+      <div class="feature-flip-card" data-anim="card" tabindex="0">
+        <div class="flip-inner">
+          <!-- FRONT -->
+          <div class="flip-front">
+            <div class="feature-img-wrapper">
+              <img src="feature_waste.jpg" alt="Waste Management" class="feature-img" loading="lazy">
+              <span class="feature-badge badge-green">AI Waste Engine</span>
+            </div>
+            <div class="feature-front-body">
+              <h3>Waste Management</h3>
+              <p>Smart kitchen scales, recycling categorizers, and AI vision track every scrap to stop food waste at the source.</p>
+              <div class="flip-hint">
+                <span>View Details & Metrics</span>
+                <span class="flip-icon">↺</span>
+              </div>
+            </div>
+          </div>
+          <!-- BACK -->
+          <div class="flip-back">
+            <div class="back-pill badge-green">Waste Intelligence</div>
+            <h4>Waste Management</h4>
+            <ul class="back-checklist">
+              <li><span>✓</span> Automated food waste sorting & sensor logs</li>
+              <li><span>✓</span> AI predictive reduction saving up to 30% cost</li>
+              <li><span>✓</span> Daily & weekly diversion analytics dashboard</li>
+              <li><span>✓</span> Kitchen staff portion control & audit trails</li>
+            </ul>
+            <div class="back-metric">
+              <div class="metric-val">-32%</div>
+              <div class="metric-lbl">Food Waste In 60 Days</div>
+            </div>
+            <div class="back-footer">
+              <button class="btn-card-demo" onclick="openDemoModal()">Book Demo</button>
+              <span class="flip-back-prompt">↺ Flip Front</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. Inventory Management -->
+      <div class="feature-flip-card" data-anim="card" tabindex="0">
+        <div class="flip-inner">
+          <!-- FRONT -->
+          <div class="flip-front">
+            <div class="feature-img-wrapper">
+              <img src="feature_inventory.jpg" alt="Inventory Management" class="feature-img" loading="lazy">
+              <span class="feature-badge badge-blue">Live Shelf Tracking</span>
+            </div>
+            <div class="feature-front-body">
+              <h3>Inventory Management</h3>
+              <p>Real-time ingredient levels, barcode scanning, automated supplier purchase orders, and zero stock-outs.</p>
+              <div class="flip-hint">
+                <span>View Details & Metrics</span>
+                <span class="flip-icon">↺</span>
+              </div>
+            </div>
+          </div>
+          <!-- BACK -->
+          <div class="flip-back">
+            <div class="back-pill badge-blue">Inventory Suite</div>
+            <h4>Inventory Management</h4>
+            <ul class="back-checklist">
+              <li><span>✓</span> Real-time raw material consumption deduction</li>
+              <li><span>✓</span> Low-threshold auto reorder via WhatsApp & Email</li>
+              <li><span>✓</span> Multi-location warehouse & cold-room sync</li>
+              <li><span>✓</span> Barcode and RFID fast replenishment intake</li>
+            </ul>
+            <div class="back-metric">
+              <div class="metric-val">99.8%</div>
+              <div class="metric-lbl">Stock Record Accuracy</div>
+            </div>
+            <div class="back-footer">
+              <button class="btn-card-demo" onclick="openDemoModal()">Book Demo</button>
+              <span class="flip-back-prompt">↺ Flip Front</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. Timestamp -->
+      <div class="feature-flip-card" data-anim="card" tabindex="0">
+        <div class="flip-inner">
+          <!-- FRONT -->
+          <div class="flip-front">
+            <div class="feature-img-wrapper">
+              <img src="feature_timestamp.jpg" alt="Timestamp & Freshness" class="feature-img" loading="lazy">
+              <span class="feature-badge badge-purple">Freshness Lifecycle</span>
+            </div>
+            <div class="feature-front-body">
+              <h3>Timestamp</h3>
+              <p>Precision time-logging for cooked batches, prep containers, and perishables. Guarantee peak food hygiene and taste.</p>
+              <div class="flip-hint">
+                <span>View Details & Metrics</span>
+                <span class="flip-icon">↺</span>
+              </div>
+            </div>
+          </div>
+          <!-- BACK -->
+          <div class="flip-back">
+            <div class="back-pill badge-purple">Expiry Guardian</div>
+            <h4>Timestamp Precision</h4>
+            <ul class="back-checklist">
+              <li><span>✓</span> Prep-to-plate freshness countdown timers</li>
+              <li><span>✓</span> Strict First-In First-Out (FIFO) kitchen alerts</li>
+              <li><span>✓</span> Automated digital label printing with QR expiry</li>
+              <li><span>✓</span> Hazard Analysis Critical Control Point (HACCP) logs</li>
+            </ul>
+            <div class="back-metric">
+              <div class="metric-val">100%</div>
+              <div class="metric-lbl">Compliance with Freshness Rules</div>
+            </div>
+            <div class="back-footer">
+              <button class="btn-card-demo" onclick="openDemoModal()">Book Demo</button>
+              <span class="flip-back-prompt">↺ Flip Front</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. Stock Management -->
+      <div class="feature-flip-card" data-anim="card" tabindex="0">
+        <div class="flip-inner">
+          <!-- FRONT -->
+          <div class="flip-front">
+            <div class="feature-img-wrapper">
+              <img src="feature_stock.jpg" alt="Stock Management" class="feature-img" loading="lazy">
+              <span class="feature-badge badge-gold">Warehouse Control</span>
+            </div>
+            <div class="feature-front-body">
+              <h3>Stock Management</h3>
+              <p>Predictive stock levels, variance audit tools, dispatch tracking, and supplier pricing comparison in one interface.</p>
+              <div class="flip-hint">
+                <span>View Details & Metrics</span>
+                <span class="flip-icon">↺</span>
+              </div>
+            </div>
+          </div>
+          <!-- BACK -->
+          <div class="flip-back">
+            <div class="back-pill badge-gold">Stock Analytics</div>
+            <h4>Stock Management</h4>
+            <ul class="back-checklist">
+              <li><span>✓</span> Automated inter-branch transfer challans</li>
+              <li><span>✓</span> Daily stock consumption vs menu sales auditing</li>
+              <li><span>✓</span> Price-trend alerts across regional suppliers</li>
+              <li><span>✓</span> Role-based stock authorization & dispatch pins</li>
+            </ul>
+            <div class="back-metric">
+              <div class="metric-val">&lt; 0.5%</div>
+              <div class="metric-lbl">Stock Variance Discrepancy</div>
+            </div>
+            <div class="back-footer">
+              <button class="btn-card-demo" onclick="openDemoModal()">Book Demo</button>
+              <span class="flip-back-prompt">↺ Flip Front</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5. Invoice Generation -->
+      <div class="feature-flip-card" data-anim="card" tabindex="0">
+        <div class="flip-inner">
+          <!-- FRONT -->
+          <div class="flip-front">
+            <div class="feature-img-wrapper">
+              <img src="feature_invoice.jpg" alt="Invoice Generation" class="feature-img" loading="lazy">
+              <span class="feature-badge badge-teal">GST & Fast Billing</span>
+            </div>
+            <div class="feature-front-body">
+              <h3>Invoice Generation</h3>
+              <p>1-second billing, QR payment receipts, automatic tax calculations, and instant digital invoicing via WhatsApp & SMS.</p>
+              <div class="flip-hint">
+                <span>View Details & Metrics</span>
+                <span class="flip-icon">↺</span>
+              </div>
+            </div>
+          </div>
+          <!-- BACK -->
+          <div class="flip-back">
+            <div class="back-pill badge-teal">Billing & Accounts</div>
+            <h4>Invoice Generation</h4>
+            <ul class="back-checklist">
+              <li><span>✓</span> 1-click GST & VAT compliant receipt formatting</li>
+              <li><span>✓</span> Split-bill, table merge & round-off calculations</li>
+              <li><span>✓</span> Instant integration with POS terminals & thermal printers</li>
+              <li><span>✓</span> Automated daily revenue reconciliation reports</li>
+            </ul>
+            <div class="back-metric">
+              <div class="metric-val">1.2s</div>
+              <div class="metric-lbl">Average Check-Out Time</div>
+            </div>
+            <div class="back-footer">
+              <button class="btn-card-demo" onclick="openDemoModal()">Book Demo</button>
+              <span class="flip-back-prompt">↺ Flip Front</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 6. Restaurant Orders for Central Kitchen -->
+      <div class="feature-flip-card" data-anim="card" tabindex="0">
+        <div class="flip-inner">
+          <!-- FRONT -->
+          <div class="flip-front">
+            <div class="feature-img-wrapper">
+              <img src="jarvo_storefront.jpg" alt="Restaurant Orders & Central Kitchen" class="feature-img" loading="lazy">
+              <span class="feature-badge badge-red">Central Kitchen Hub</span>
+            </div>
+            <div class="feature-front-body">
+              <h3>Restaurant Orders</h3>
+              <p>Connect 100+ dining outlets to your master central kitchen. Route indent orders, prep batches, and manage deliveries effortlessly.</p>
+              <div class="flip-hint">
+                <span>View Details & Metrics</span>
+                <span class="flip-icon">↺</span>
+              </div>
+            </div>
+          </div>
+          <!-- BACK -->
+          <div class="flip-back">
+            <div class="back-pill badge-red">Central Kitchen Routing</div>
+            <h4>Restaurant Orders</h4>
+            <ul class="back-checklist">
+              <li><span>✓</span> Outlet-to-base kitchen digital indenting system</li>
+              <li><span>✓</span> Kitchen Display System (KDS) prep sequencing</li>
+              <li><span>✓</span> Live delivery dispatch tracking & dispatch notes</li>
+              <li><span>✓</span> Centralized recipe scaling & portion uniformity</li>
+            </ul>
+            <div class="back-metric">
+              <div class="metric-val">100+</div>
+              <div class="metric-lbl">Outlets Synced Simultaneously</div>
+            </div>
+            <div class="back-footer">
+              <button class="btn-card-demo" onclick="openDemoModal()">Book Demo</button>
+              <span class="flip-back-prompt">↺ Flip Front</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+</main>
+
+<!-- ═══════════════════ ABOUT US PAGE (IN SAME TAB & SAME LAYOUT) ═══════════════════ -->
+<main id="page-about" style="display:none;">
+  <section class="about-hero">
+    <div class="sub-pill">THE STORY OF JARVO</div>
+    <h1 class="about-headline">Intelligent Innovation for <span class="gold-gradient">Hospitality Leaders</span></h1>
+    <p class="about-lead">
+      We believe the best restaurant experiences happen when chefs and managers are freed from tedious administrative paperwork. JARVO pairs cutting-edge robotics and computer vision with high-performance restaurant engineering.
+    </p>
+  </section>
+
+  <section class="about-section">
+    <div class="about-grid">
+      <div class="about-card" data-anim="card">
+        <div class="about-icon-badge">🤖</div>
+        <h3>The JARVO Team</h3>
+        <p>A global team of culinary professionals, hardware engineers, and AI researchers who have managed Michelin-star restaurants and high-volume ghost kitchens alike.</p>
+      </div>
+
+      <div class="about-card" data-anim="card">
+        <div class="about-icon-badge">⚡</div>
+        <h3>The JARVO System</h3>
+        <p>An integrated, fault-tolerant software system architected to run seamlessly both online and offline. Power cuts or internet drops will never halt your restaurant billing or kitchen display.</p>
+      </div>
+
+      <div class="about-card" data-anim="card">
+        <div class="about-icon-badge">📊</div>
+        <h3>Stock Analysis Innovation</h3>
+        <p>Our neural network forecasts exact ingredient demand based on holidays, local weather, footfall trends, and past menu affinity, preventing dead stock before you buy.</p>
+      </div>
+
+      <div class="about-card" data-anim="card">
+        <div class="about-icon-badge">♻️</div>
+        <h3>Waste Management Revolution</h3>
+        <p>By capturing the exact timestamp, station, and weight of discarded ingredients, our system pinpoints whether waste is coming from over-portioning, prep trimming, or poor storage.</p>
+      </div>
+
+      <div class="about-card" data-anim="card">
+        <div class="about-icon-badge">⏱️</div>
+        <h3>Timestamp Freshness Tracking</h3>
+        <p>Every single sauce, marinated meat, and prepped garnish receives a digital timestamp tag. Zero guesswork for cooks, 100% peace of mind for food safety inspectors.</p>
+      </div>
+
+      <div class="about-card" data-anim="card">
+        <div class="about-icon-badge">🌐</div>
+        <h3>Multi-Outlet Cloud Network</h3>
+        <p>Scale effortlessly from a single food truck or cafe to a regional chain of 500+ franchise outlets with centralized menu pricing, role controls, and corporate reporting.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Storefront Showcase on About Page -->
+  <section class="about-storefront-section">
+    <div class="storefront-card">
+      <img src="jarvo_storefront.jpg" alt="Jarvo Storefront" class="storefront-card-img">
+      <div class="storefront-card-content">
+        <h2>Powering 10,000+ Dining Outlets Worldwide</h2>
+        <p>Experience the operational calmness of a restaurant powered by JARVO intelligence.</p>
+        <div class="storefront-buttons">
+          <button class="btn-get-started" onclick="openDemoModal()">Book Your Free Demo</button>
+          <button class="btn-secondary" onclick="showPage('home')">Back to Home</button>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ═══════════════════ FOOTER ═══════════════════ -->
+<footer id="main-footer">
+  <div class="footer-inner">
+    <div class="footer-left">
+      <div class="footer-brand-title">JARVO</div>
+      <p class="footer-motto">Good Food. Better Business.</p>
+      <p class="footer-small">© 2026 JARVO Technologies Inc. All rights reserved.</p>
+    </div>
+
+    <!-- Centered JARVO logo and duplication jarvo@gmail.com as requested -->
+    <div class="footer-center">
+      <a href="#" class="footer-big-logo" onclick="showPage('home');return false;">JARVO</a>
+      <p class="footer-email">
+        <a href="mailto:jarvo@gmail.com">jarvo@gmail.com</a>
+      </p>
+      <p class="footer-email-dup">jarvo@gmail.com</p>
+      <p class="footer-subtext">The Modern Operating System for High-Performance Kitchens</p>
+    </div>
+
+    <div class="footer-right">
+      <div class="footer-links-col">
+        <span class="footer-col-title">Navigation</span>
+        <a href="#" onclick="showPage('home');return false;">Home</a>
+        <a href="#" onclick="showPage('about');return false;">About Us</a>
+        <a href="#features" onclick="scrollToSection('features');return false;">Features</a>
+        <a href="#" onclick="openDemoModal();return false;">Book Demo</a>
+      </div>
+      <div class="footer-links-col">
+        <span class="footer-col-title">Product Suite</span>
+        <a href="#" onclick="return false;">POS Billing</a>
+        <a href="#" onclick="return false;">Waste AI</a>
+        <a href="#" onclick="return false;">Central Kitchen</a>
+        <a href="#" onclick="return false;">Stock & Inventory</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
